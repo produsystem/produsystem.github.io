@@ -14,15 +14,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::view('/', 'welcome')->name('welcome');
+
+// Route::get('/chirps/{chirp?}', function ($chirp=null) {
+    
+//     if($chirp=='2'){
+//         // DIRECCIONA A LA RUTA 
+//         // return redirect('chirps');
+//         // //DIRECCIONA AL NOMBRE DE RUTA
+//         // return redirect()->route('chirps.index');
+        
+//         // DIRECCIONA AL NOMBRE DE RUTA(METODO CORTO)
+//         return to_route('chirps.index');
+//     }
+    
+//     return 'hola mundo'.$chirp;
+
+
+
+// });
+
+
+
+
 
 Route::middleware('auth')->group(function () {
+
+Route::view('/dashboard','dashboard' )->name('dashboard');
+
+Route::get('/chirps', function () {
+    return view('chirps.index');
+})->name('chirps.index');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
